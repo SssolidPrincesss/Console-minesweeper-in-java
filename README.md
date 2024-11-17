@@ -46,6 +46,7 @@
 Также создается ArrayList, который содержит в себе двумерные массивы символьного типа. Он нужен для работы главного цикла.    
      
 ```java
+public static void main(String[] args) {
 public static Scanner sc = new Scanner(System.in);
 	
 public static ArrayList <char[][]> resultOfTry = new ArrayList<char[][]>();

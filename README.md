@@ -19,7 +19,7 @@
 Этот класс – тело всей игры.
 Он содержит главный метод и три вспомогательных метода:  
 •	main  
-Главный класс, в котором находится главный цикл (в моем случае do-while, т. к. сначала игрок делает ход, а потом уже происходит проверка на мину и количество свободных ходов)  
+Главный метод, в котором находится главный цикл (в моем случае do-while, т. к. сначала игрок делает ход, а потом уже происходит проверка на мину и количество свободных ходов)  
 •	setResultOfTry  
 Этот метод принимает значение Эррэй-Листа из вспомогательного класса GameHelper и передает содержание этого листа в лист главного класса. Это нужно для того, чтобы проверить наличие в игровом поле свободных ходов  
 •	fillMatrix  
@@ -157,6 +157,71 @@ public class MinerGame {
 	}
 }
 ```
+Разберем каждую часть это класса более подробно: 
+
+Сначала создается объект типа сканер. Он нужен для того, чтобы считать ход игрока.  
+Так же создается ArrayList, котороый содержит в себе двумерные массивы символьного типа. Он нужен для работы главного цикла.  
+   
+```java
+public static Scanner sc = new Scanner(System.in);
+	
+public static ArrayList <char[][]> resultOfTry = new ArrayList<char[][]>();
+```
+
+
+•	main  
+Главный метод, в котором находится главный цикл (в моем случае do-while, т. к. сначала игрок делает ход, а потом уже происходит проверка на мину и количество свободных ходов)   
+
+```java
+public static void main(String[] args) {
+		MessageHelper mh = new MessageHelper();
+		mh.gameRules();
+		
+		System.out.println("Введи размер игрового поля, чтобы начать игру:");
+		int field_i = sc.nextInt();
+		int field_j = sc.nextInt();
+		            
+		char[][] field = new char[field_i][field_j];
+		             
+		fillTheField(field,field_i,field_j);
+		
+		System.out.println("");
+
+		boolean ifFieldContainsDark = true;
+		boolean ifHitMine = true;
+		
+		int tryCounter = 0;
+		
+		
+		do{
+		    GameHelper gh = new GameHelper();
+			gh.matrixIndex(field_i, field_j);
+			ifHitMine = gh.mineCheck(field, field_i,field_j);
+			
+/* подсказка разработчику
+		       for (char[][] array2D : resultOfTry) {
+		            System.out.println("Next 2D ЕКНarray:");
+		            for (char[] row : array2D) {
+		                for (char element : row) {
+		                    System.out.print(element + " ");
+		                }
+		                System.out.println(); 
+		            }
+		            System.out.println(); 
+		            
+		        }
+*/
+			
+			ifFieldContainsDark = gh.CheckArrConainsDark(resultOfTry);
+		    tryCounter++; 
+		 }while(ifHitMine == true && ifFieldContainsDark == true);
+		resultOfTry.clear();
+		mh.finishGame(tryCounter);
+	}
+```
+
+
+    
 Этот кусок кода выводит на консоль (то, что он задействует другие классы для вывода остальной информации, в расчет не берем):  
 ![Menu](https://github.com/SssolidPrincesss/Console-minesweeper-in-java/blob/main/Consoleminesweeper/MinerGameOut.png)  
   

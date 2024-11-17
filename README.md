@@ -207,8 +207,30 @@ public class GameHelper {
         
         ArrayList <char[][]> tempArray = new ArrayList<char[][]>();
         
+        
+        
         if (ff[try_i][try_j] == '*') {
         	System.out.println("Сапер взлетел на воздух!");
+        	
+        	
+        	for (int i = 0; i < ff.length; i++) {
+                for (int j = 0; j < ff[i].length; j++) {
+                	fTemp[i][j] = '.';
+                }
+            } 
+            
+        	System.out.println();
+        	
+        	for (int i = 0; i < ff.length; i++) {
+        		for (int j = 0; j < ff[i].length; j++) {
+        			if (ff[i][j] == '0' || ff[i][j] == '1' || ff[i][j] == '2' || ff[i][j] == '3' || ff[i][j] == '4'
+        					|| ff[i][j] == '5' || ff[i][j] == '6' || ff[i][j] == '7' || ff[i][j] == '8') {
+        				fTemp[i][j] = ff[i][j];
+        			}
+        		}     
+        	}
+        	fTemp[try_i][try_j] = '*'; 
+        	
         	explosionСhecking = false;
         }
         else {
@@ -226,19 +248,24 @@ public class GameHelper {
         				ff[i][j] = mg.checkAdjacentField(try_i, try_j, ff);
         				fTemp[i][j] = ff[i][j];
         			}
+        			if (ff[i][j] == '0' || ff[i][j] == '1' || ff[i][j] == '2' || ff[i][j] == '3' || ff[i][j] == '4'
+        					|| ff[i][j] == '5' || ff[i][j] == '6' || ff[i][j] == '7' || ff[i][j] == '8') {
+        				fTemp[i][j] = ff[i][j];
+        			}
         		}     
         	}
-
-            for (int i = 0; i < ff.length; i++) {
-                for (int j = 0; j < ff[i].length; j++) {
-                    System.out.print(fTemp[i][j] + "    "); 
-                }
-                System.out.println();
-                System.out.println();
-            }
             explosionСhecking = true;
         }
  
+        
+        for (int i = 0; i < ff.length; i++) {
+            for (int j = 0; j < ff[i].length; j++) {
+                System.out.print(fTemp[i][j] + "    "); 
+            }
+            System.out.println();
+            System.out.println();
+        }
+        
         tempArray.add(ff);
         mg.setResultOfTry(tempArray);
         tempArray.remove(ff);
@@ -272,6 +299,8 @@ public class GameHelper {
     
 }
 ```
+Этот кусок кода выводит на консоль индеусированное поле, а так же результат попыток игрока:  
+![Menu](https://github.com/SssolidPrincesss/Console-minesweeper-in-java/blob/main/Consoleminesweeper/GameHelperOut.png)  
 
 
 3.	MessageHelper
@@ -280,8 +309,7 @@ public class MessageHelper {
 	public void gameRules() {
 		System.out.print("Добро пожаловать в игру сапер!");
 		System.out.println("Правила игры: игроку необходимо открыть все ячейки поля не задев мину");
-		System.out.println("Но! Есть одна особенность");
-		System.out.println("Ты будешь видеть только последний ход");
+		System.out.println("Игровое поле не может привышать размер 10 на 10 ячеек");
 		System.out.println("Удачи");
 		System.out.println();
 	}
@@ -292,3 +320,7 @@ public class MessageHelper {
 	}
 }
 ```    
+Эта часть кода выводит на консоль правила игры:  
+![Menu](https://github.com/SssolidPrincesss/Console-minesweeper-in-java/blob/main/Consoleminesweeper/GameRules.png)  
+А так же оповещает об окнчании игры и показывает колличество попыток игрока:  
+![Menu](https://github.com/SssolidPrincesss/Console-minesweeper-in-java/blob/main/Consoleminesweeper/EndGame.png)

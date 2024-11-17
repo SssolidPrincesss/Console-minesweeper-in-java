@@ -55,7 +55,7 @@ public class MinerGame {
 		            
 		char[][] field = new char[field_i][field_j];
 		             
-		fillMatrix(field,field_i,field_j);
+		fillTheField(field,field_i,field_j);
 		
 		System.out.println("");
 
@@ -83,6 +83,7 @@ public class MinerGame {
 		            
 		        }
 */
+			
 			ifFieldContainsDark = gh.CheckArrConainsDark(resultOfTry);
 		    tryCounter++; 
 		 }while(ifHitMine == true && ifFieldContainsDark == true);
@@ -99,7 +100,7 @@ public class MinerGame {
 	
 	
 	
-	public static void fillMatrix (char[][] matrix,int mas_i,int mas_j){
+	public static void fillTheField (char[][] matrix,int mas_i,int mas_j){
 		Random rnd = new Random(System.currentTimeMillis());
 		for (int i=0;i<mas_i;i++){
 		    for (int j=0;j<mas_j;j++){
@@ -114,31 +115,31 @@ public class MinerGame {
 		 
 		    
 		    
-	public static char checkAdjacentField(int i, int j, char[][] ae) {
+	public static char checkAdjacentField(int i, int j, char[][] pt) {
 		int count = 0;
-		if (j <= ae[i].length - 2) { // to the right
-			count += ae[i][j + 1] == '*' ? 1 : 0;
+		if (j <= pt[i].length - 2) { // to the right
+			count += pt[i][j + 1] == '*' ? 1 : 0;
 		}
-		if (j <= ae[i].length - 2 && i <= ae.length - 2) { // move to top right
-			count += ae[i + 1][j + 1] == '*' ? 1 : 0;
+		if (j <= pt[i].length - 2 && i <= pt.length - 2) { // move to top right
+			count += pt[i + 1][j + 1] == '*' ? 1 : 0;
 		}
-		if (j <= ae[i].length - 2 && i > 0) { // move to bottom right
-		    count += ae[i - 1][j + 1] == '*' ? 1 : 0;
+		if (j <= pt[i].length - 2 && i > 0) { // move to bottom right
+		    count += pt[i - 1][j + 1] == '*' ? 1 : 0;
 		}
 		if (j > 0) { // to the left
-		    count += ae[i][j - 1] == '*' ? 1 : 0;
+		    count += pt[i][j - 1] == '*' ? 1 : 0;
 		}
-		if (j > 0 && i <= ae.length - 2) { // to top left
-		    count += ae[i + 1][j - 1] == '*' ? 1 : 0;
+		if (j > 0 && i <= pt.length - 2) { // to top left
+		    count += pt[i + 1][j - 1] == '*' ? 1 : 0;
 		}
 		if (j > 0 && i > 0) { // to bottom left
-		    count += ae[i - 1][j - 1] == '*' ? 1 : 0;
+		    count += pt[i - 1][j - 1] == '*' ? 1 : 0;
 		}
-		if (i <= ae.length - 2) { // move to top
-		    count += ae[i + 1][j] == '*' ? 1 : 0;
+		if (i <= pt.length - 2) { // move to top
+		    count += pt[i + 1][j] == '*' ? 1 : 0;
 		}
 		if (i > 0) { // move top bottom
-		    count += ae[i - 1][j] == '*' ? 1 : 0;
+		    count += pt[i - 1][j] == '*' ? 1 : 0;
 		}
 		String stringValue = String.valueOf(count);
 		return stringValue.charAt(0);

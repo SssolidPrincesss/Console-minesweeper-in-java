@@ -149,9 +149,9 @@ public class MinerGame {
 Этот кусок кода выводит на консоль:  
 ![Menu](https://github.com/SssolidPrincesss/Console-minesweeper-in-java/blob/main/Consoleminesweeper/MinerGameOut.png)  
   
-Здесь вы можете наблюдать закомментирванную часть кода, это подсказка для разработчика, опять же для удобства тестирования, если ее раскомментировать, консоль будет выглядеть примерно так:  
+Так же здесь вы можете наблюдать закомментирванную часть кода, это подсказка для разработчика, опять же для удобства тестирования, если ее раскомментировать, на консоль будет выведено:  
 
-![Menu](https://github.com/SssolidPrincesss/Console-minesweeper-in-java/blob/main/Consoleminesweeper/ConsoleHint.png)
+![Menu](https://github.com/SssolidPrincesss/Console-minesweeper-in-java/blob/main/Consoleminesweeper/ConsoleHintOnly.png)  
 
 При каждом ходе будет выводиться актуальная ситуация на поле 
 

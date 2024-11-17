@@ -371,8 +371,8 @@ public boolean CheckArrConainsDark(ArrayList <char[][]> l){
 public class MessageHelper {
 	public void gameRules() {
 		System.out.print("Добро пожаловать в игру сапер!");
-		System.out.println("Правила игры: игроку необходимо открыть все ячейки поля не задев мину");
-		System.out.println("Игровое поле не может привышать размер 10 на 10 ячеек");
+		System.out.println("Правила игры: игроку необходимо открыть все ячейки поля, не задев мину");
+		System.out.println("Игровое поле не может превышать размер 10 на 10 ячеек");
 		System.out.println("Удачи");
 		System.out.println();
 	}

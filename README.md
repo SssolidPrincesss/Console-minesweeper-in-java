@@ -157,87 +157,76 @@ public class MinerGame {
 	}
 }
 ```
-Разберем каждую часть это класса более подробно: 
-
-Сначала создается ссылка наобъект типа сканер. Он нужен для того, чтобы считать ход игрока.  
-Так же создается ArrayList, котороый содержит в себе двумерные массивы символьного типа. Он нужен для работы главного цикла.  
-   
+Разберем каждую часть этого класса более подробно:   
+  
+Сначала создается ссылка на объект типа сканер. Он нужен для того, чтобы считать ход игрока.   
+Также создается ArrayList, который содержит в себе двумерные массивы символьного типа. Он нужен для работы главного цикла.    
+     
 ```java
 public static Scanner sc = new Scanner(System.in);
 	
 public static ArrayList <char[][]> resultOfTry = new ArrayList<char[][]>();
 ```
-
-
+  
+   
 •	main  
 Главный метод, в котором находится главный цикл (в моем случае do-while, т. к. сначала игрок делает ход, а потом уже происходит проверка на мину и количество свободных ходов).   
 В первую очередь здесь создается ссылка на объект MessageHelper, а затем вызывается его метод, отвечающий за приветствие.  
   
-Затем игроку дается возможность задать размеры игрового поля.   
-После чего создается двумерный символьный массив, который сразу же передается вместе с размерами поля в метод fillTheField, который случайным образом заполняет поле минами и свободными ходами.  
-Затем создаются две переменные типа boolean: первая нужна для проверки наличия в поле свободных ходов, а вторая — для того, чтобы проверить, не наступил ли игрок на мину.  
-Еще создается целочисленная переменная для подсчитывания количества ходов игрока.  
-
+Затем игроку дается возможность задать размеры игрового поля.  
+```java
+		System.out.println("Введи размер игрового поля, чтобы начать игру:");
+		int field_i = sc.nextInt();
+		int field_j = sc.nextInt();
+```
+После чего создается двумерный символьный массив, который сразу же передается вместе с размерами поля в метод fillTheField, который случайным образом заполняет поле минами и свободными ходами.   
+```java
+		char[][] field = new char[field_i][field_j];
+		             
+		fillTheField(field,field_i,field_j);
+```
+Затем создаются две переменные типа boolean: первая нужна для проверки наличия в поле свободных ходов, а вторая — для того, чтобы проверить, не наступил ли игрок на мину.   
+```java
+		boolean ifFieldContainsDark = true;
+		boolean ifHitMine = true;
+```  
+Еще создается целочисленная переменная для подсчитывания количества ходов игрока.    
+```java
+		int tryCounter = 0;
+```
 Далее начинается главный цикл игры.   
-Здесь создается ссылка на объект типа GameHelper, а после булевое значение, возвращаемое данным методом mineCheck, присваивается ранее созданной переменной.   
+```java
+		do{
+```  
+Здесь создается ссылка на объект типа GameHelper, а после булевое значение, возвращаемое данным методом mineCheck, присваивается ранее созданной переменной.  
 Параллельно с этим вызывается сам метод mineCheck, функционал которого разберу позже.  
-
+```java
+			GameHelper gh = new GameHelper();
+			gh.matrixIndex(field_i, field_j);
+			ifHitMine = gh.mineCheck(field, field_i,field_j);
+```
 Также здесь вы можете наблюдать закомментированную часть кода, это подсказка для разработчика, опять же для удобства тестирования, если ее раскомментировать, на консоль будет выведена вот такая штука:  
 
 ![Menu](https://github.com/SssolidPrincesss/Console-minesweeper-in-java/blob/main/Consoleminesweeper/ConsoleHintOnly.png)  
 
 Эта подсказка отражает актуальную ситуацию на поле.  
 
-После этого втрой булевой пересенной присваивается значение, возвращаемое методом CheckArrConainsDark(проверяет свободные ходы). в самом конце тела главного цикла увеличивается счетчик ходов.
-
+После этого второй булевой переменной присваивается значение, возвращаемое методом checkArrContainsDark (проверяет свободные ходы).  
+В самом конце тела главного цикла увеличивается счетчик ходов.
+```java
+			ifFieldContainsDark = gh.CheckArrConainsDark(resultOfTry);
+		    	tryCounter++; 
+```
 Условием работы главного цикла игры является наличие свободных ходов и то, что игрок не сходил ни мину.
 ```java
-public static void main(String[] args) {
-		MessageHelper mh = new MessageHelper();
-		mh.gameRules();
-		
-		System.out.println("Введи размер игрового поля, чтобы начать игру:");
-		int field_i = sc.nextInt();
-		int field_j = sc.nextInt();
-		            
-		char[][] field = new char[field_i][field_j];
-		             
-		fillTheField(field,field_i,field_j);
-		
-		System.out.println("");
-
-		boolean ifFieldContainsDark = true;
-		boolean ifHitMine = true;
-		
-		int tryCounter = 0;
-		
-		
-				do{
-		    GameHelper gh = new GameHelper();
-			gh.matrixIndex(field_i, field_j);
-			ifHitMine = gh.mineCheck(field, field_i,field_j);
-			
-/* подсказка разработчику
-		       for (char[][] array2D : resultOfTry) {
-		            System.out.println("Next 2D ЕКНarray:");
-		            for (char[] row : array2D) {
-		                for (char element : row) {
-		                    System.out.print(element + " ");
-		                }
-		                System.out.println(); 
-		            }
-		            System.out.println(); 
-		            
-		        }
-*/
-			
-			ifFieldContainsDark = gh.CheckArrConainsDark(resultOfTry);
-		    tryCounter++; 
-		 }while(ifHitMine == true && ifFieldContainsDark == true);
+		}while(ifHitMine == true && ifFieldContainsDark == true);
+```
+И в самом конце метода очищается лист, и вызывается метод, отвечающий за завершение игры
+```java
 		resultOfTry.clear();
 		mh.finishGame(tryCounter);
-	}
 ```
+
 
 
     

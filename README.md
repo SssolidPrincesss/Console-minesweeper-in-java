@@ -200,7 +200,23 @@ public static ArrayList <char[][]> resultOfTry = new ArrayList<char[][]>();
 			gh.matrixIndex(field_i, field_j);
 			ifHitMine = gh.mineCheck(field, field_i,field_j);
 ```
-Также здесь вы можете наблюдать закомментированную часть кода, это подсказка для разработчика, опять же для удобства тестирования, если ее раскомментировать, на консоль будет выведена вот такая штука:  
+Также здесь вы можете наблюдать закомментированную часть кода:
+```java
+/* подсказка разработчику
+		       for (char[][] array2D : resultOfTry) {
+		            System.out.println("Next 2D ЕКНarray:");
+		            for (char[] row : array2D) {
+		                for (char element : row) {
+		                    System.out.print(element + " ");
+		                }
+		                System.out.println(); 
+		            }
+		            System.out.println(); 
+		            
+		        }
+*/
+```
+Это подсказка для разработчика, опять же для удобства тестирования, если ее раскомментировать, на консоль будет выведена вот такая штука:  
 
 ![Menu](https://github.com/SssolidPrincesss/Console-minesweeper-in-java/blob/main/Consoleminesweeper/ConsoleHintOnly.png)  
 

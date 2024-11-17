@@ -31,7 +31,7 @@
 Это вспомогательных класс, который выводит индексированное поле, проверяет, наступил игрок на мину или нет, выводит поле с ходами и проверяет, содержатся ли в поле свободные ходы  
 •	matrixIndex  
 У этого метода достаточно простая задача – он выводит на консоль индексированное поле, чтобы игроку было понятно, как вводить свой ход  
-•	matrixIndex  
+•	mineCheck  
 А вот этот метод имеет достаточно широкий функционал.  
 В первую очередь он проверяет, не наступил ли игрок на мину, и если этого не случилось, он создает массив только из точек, чтобы игрок не видел, где мины.    
 После он при помощи метода checkAdjacentField из главного класса добавляет в поле на место хода игрока количество мин в соседних ячейках.    
@@ -420,6 +420,164 @@ public class GameHelper {
     
     
     public boolean CheckArrConainsDark(ArrayList <char[][]> l){
+    	boolean d = true;
+    	int countDark = 0;
+    	for (char[][] array : l) {
+            for (char[] row : array) {
+                for (char element : row) {
+                    if (element == '.' ) {
+                    	countDark++;   
+                    }
+                }
+            }
+        }
+    	if (countDark >= 1) {
+    		d = true;
+    	}
+    	else {
+    		d = false;
+    	}
+    	return d;
+    }
+    
+}
+```
+
+
+В первую очередь необходимо похаботиться о возможности считать шаг игрока, в этом нам поможет сканер:  
+```java
+public static Scanner scanTry = new Scanner(System.in);
+```
+•	matrixIndex  
+У этого метода достаточно простая задача – он выводит на консоль индексированное поле, чтобы игроку было понятно, как вводить свой ход.   
+```java
+	public void matrixIndex(int mi, int mj){
+		String[][] masivPlay = new String[mi][mj];
+		
+		System.out.println("Выбери один из индексов:");
+		
+    	for (int i = 0; i < mi; i++) {
+  	      for (int j = 0; j < mj; j++) {
+  	            	masivPlay[i][j] = "" + i + " " + j + "";
+  	      }
+    	}
+  	             
+    	for (int i = 0; i < mi; i++) {
+    		for (int j = 0; j < mj; j++) {
+  	           System.out.print(masivPlay[i][j] + "  ");
+    		}
+    		System.out.println();
+    		System.out.println();
+    	}
+    	System.out.println("");
+    }
+```
+•	mineCheck  
+А вот этот метод имеет достаточно широкий функционал.  
+В первую очередь создается булеваая переменная (нужна для работы главного цикла) и считывает ход игрока:    
+```java
+boolean explosionСhecking  = true;
+
+System.out.println("Введи свой выбор:");
+    	
+        int try_i = scanTry.nextInt();
+        int try_j = scanTry.nextInt();
+```  
+Потом создается ссылка на объект типа MinerGame для дальнейшей работы с методами этого класса, а также создаются временные массив и лист для хранения «буферных данных»:  
+```java
+ 	MinerGame mg = new MinerGame();
+
+        char[][] fTemp = new char[mas_i][mas_j];
+        
+        ArrayList <char[][]> tempArray = new ArrayList<char[][]>();
+```   
+Дальше идет условие, которое проверяет, не наступил ли игрок на мину. Если наступил, то массив заполняется точками при помощи первого цикла:
+```java
+	if (ff[try_i][try_j] == '*') {
+        	System.out.println("Сапер взлетел на воздух!");
+        	
+        	
+        	for (int i = 0; i < ff.length; i++) {
+                for (int j = 0; j < ff[i].length; j++) {
+                	fTemp[i][j] = '.';
+                }
+            } 
+            
+        	System.out.println();
+```
+А после при помощи второго массива проверяет предыдущие ходы игрока и добавляет их на поле:  
+```java
+		for (int i = 0; i < ff.length; i++) {
+        		for (int j = 0; j < ff[i].length; j++) {
+        			if (ff[i][j] == '0' || ff[i][j] == '1' || ff[i][j] == '2' || ff[i][j] == '3' || ff[i][j] == '4' || ff[i][j] == '5' || ff[i][j] == '6' || ff[i][j] == '7' || ff[i][j] == '8') {
+        				fTemp[i][j] = ff[i][j];
+        			}
+        		}     
+        	}
+```
+В конце на место хода игрока ставится мина ('*') и булевой переменной присваивается false: 
+```java
+        	fTemp[try_i][try_j] = '*'; 
+        	
+        	explosionСhecking = false;
+        }
+```   
+Если же игрок не попал на мину, то сначала массив заполняется точками:  
+```java
+        else {
+            for (int i = 0; i < ff.length; i++) {
+                for (int j = 0; j < ff[i].length; j++) {
+                	fTemp[i][j] = '.';
+                }
+            } 
+            
+        	System.out.println();
+```
+Потом идет цикл с двумя условиями:
+1. Условие, которое проверяет соответствие индексов передаваемого в метод массива с индексами, введенными игроком (ход игрока). Если совпадает, то при помощи метода checkAdjacentField из главного класса элементу из передаваемого массива присваивается символьное значение (количество мин рядом).
+2. Условие, которое проверяет предыдущие ходы игрока и добавляет их на поле
+```java
+        	for (int i = 0; i < ff.length; i++) {
+        		for (int j = 0; j < ff[i].length; j++) {
+        			if ( i == try_i && j == try_j) {
+        				ff[i][j] = mg.checkAdjacentField(try_i, try_j, ff);
+        				fTemp[i][j] = ff[i][j];
+        			}
+        			if (ff[i][j] == '0' || ff[i][j] == '1' || ff[i][j] == '2' || ff[i][j] == '3' || ff[i][j] == '4' || ff[i][j] == '5' || ff[i][j] == '6' || ff[i][j] == '7' || ff[i][j] == '8') {
+        				fTemp[i][j] = ff[i][j];
+        			}
+        		}     
+        	}
+```
+И в конце булевой переменной присваивается true:  
+```java
+explosionСhecking = true;
+```  
+Далее в методе размещен цикл, который просто выводит массив с попытками на консоль:
+```java
+        for (int i = 0; i < ff.length; i++) {
+            for (int j = 0; j < ff[i].length; j++) {
+                System.out.print(fTemp[i][j] + "    "); 
+            }
+            System.out.println();
+            System.out.println();
+        }
+```
+В самом конце метода используется подготовленный ранее временный лист, в который мы добавляем массив с предыдущими ходами игрока и при помощи метода setResultOfTry передаем в главный класс для дальнейшей обработки.  
+После необходимо очистить лист и вернуть булевое значение.  
+```java
+        tempArray.add(ff);
+        mg.setResultOfTry(tempArray);
+        tempArray.remove(ff);
+        
+        return explosionСhecking;
+    }
+```  
+  
+•	CheckArrConainsDark  
+Этот метод проверяет наличие свободных ходов в игровом поле и возвращает булевое значение, которое также важно для работы главного цикла:
+```java
+public boolean CheckArrConainsDark(ArrayList <char[][]> l){
     	boolean d = true;
     	int countDark = 0;
     	for (char[][] array : l) {

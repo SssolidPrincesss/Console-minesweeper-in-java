@@ -302,7 +302,7 @@ public class GameHelper {
 Этот кусок кода выводит на консоль индеусированное поле, а так же результат попыток игрока:  
 ![Menu](https://github.com/SssolidPrincesss/Console-minesweeper-in-java/blob/main/Consoleminesweeper/GameHelperOut.png)  
 
-Если игрок сделал ход на мину:
+Если игрок сделал ход на мину:  
 ![Menu](https://github.com/SssolidPrincesss/Console-minesweeper-in-java/blob/main/Consoleminesweeper/UnluckTry.png)
 
 3.	MessageHelper

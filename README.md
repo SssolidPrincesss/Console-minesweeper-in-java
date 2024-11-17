@@ -153,7 +153,7 @@ public class MinerGame {
 
 ![Menu](https://github.com/SssolidPrincesss/Console-minesweeper-in-java/blob/main/Consoleminesweeper/ConsoleHintOnly.png)  
 
-При каждом ходе будет выводиться актуальная ситуация на поле 
+Эта подсказка отражает актуальную ситуацию на поле 
 
 
     

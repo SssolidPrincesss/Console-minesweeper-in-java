@@ -36,118 +36,10 @@
 
     
 
-И наконец, код самой игры в том же порядке, как в плане:   
+И наконец, код самой игры в том же порядке, как в плане:    
+  
 1.	MinerGame.
-```java
-import java.util.*;
-
-public class MinerGame {
-	
-	public static Scanner sc = new Scanner(System.in);
-	
-	public static ArrayList <char[][]> resultOfTry = new ArrayList<char[][]>();
-	
-	public static void main(String[] args) {
-		MessageHelper mh = new MessageHelper();
-		mh.gameRules();
-		
-		System.out.println("Введи размер игрового поля, чтобы начать игру:");
-		int field_i = sc.nextInt();
-		int field_j = sc.nextInt();
-		            
-		char[][] field = new char[field_i][field_j];
-		             
-		fillTheField(field,field_i,field_j);
-		
-		System.out.println("");
-
-		boolean ifFieldContainsDark = true;
-		boolean ifHitMine = true;
-		
-		int tryCounter = 0;
-		
-		
-		do{
-		    GameHelper gh = new GameHelper();
-			gh.matrixIndex(field_i, field_j);
-			ifHitMine = gh.mineCheck(field, field_i,field_j);
-			
-/* подсказка разработчику
-		       for (char[][] array2D : resultOfTry) {
-		            System.out.println("Next 2D ЕКНarray:");
-		            for (char[] row : array2D) {
-		                for (char element : row) {
-		                    System.out.print(element + " ");
-		                }
-		                System.out.println(); 
-		            }
-		            System.out.println(); 
-		            
-		        }
-*/
-			
-			ifFieldContainsDark = gh.CheckArrConainsDark(resultOfTry);
-		    tryCounter++; 
-		 }while(ifHitMine == true && ifFieldContainsDark == true);
-		resultOfTry.clear();
-		mh.finishGame(tryCounter);
-	}
-
-	
-	public void setResultOfTry(ArrayList<char[][]> rt){
-        for (char[][] element : rt) {
-        	resultOfTry.add(element);
-        }
-	}
-	
-	
-	
-	public static void fillTheField (char[][] matrix,int mas_i,int mas_j){
-		Random rnd = new Random(System.currentTimeMillis());
-		for (int i=0;i<mas_i;i++){
-		    for (int j=0;j<mas_j;j++){
-		        if (rnd.nextInt(2)==0) matrix[i][j]='.';
-		        else matrix[i][j]='*';
-		        System.out.print(matrix[i][j] + "    ");
-		    }
-		    System.out.println();
-		    System.out.println();
-		}
-	}
-		 
-		    
-		    
-	public static char checkAdjacentField(int i, int j, char[][] pt) {
-		int count = 0;
-		if (j <= pt[i].length - 2) { // to the right
-			count += pt[i][j + 1] == '*' ? 1 : 0;
-		}
-		if (j <= pt[i].length - 2 && i <= pt.length - 2) { // move to top right
-			count += pt[i + 1][j + 1] == '*' ? 1 : 0;
-		}
-		if (j <= pt[i].length - 2 && i > 0) { // move to bottom right
-		    count += pt[i - 1][j + 1] == '*' ? 1 : 0;
-		}
-		if (j > 0) { // to the left
-		    count += pt[i][j - 1] == '*' ? 1 : 0;
-		}
-		if (j > 0 && i <= pt.length - 2) { // to top left
-		    count += pt[i + 1][j - 1] == '*' ? 1 : 0;
-		}
-		if (j > 0 && i > 0) { // to bottom left
-		    count += pt[i - 1][j - 1] == '*' ? 1 : 0;
-		}
-		if (i <= pt.length - 2) { // move to top
-		    count += pt[i + 1][j] == '*' ? 1 : 0;
-		}
-		if (i > 0) { // move top bottom
-		    count += pt[i - 1][j] == '*' ? 1 : 0;
-		}
-		String stringValue = String.valueOf(count);
-		return stringValue.charAt(0);
-	}
-}
-```
+	  
 Разберем каждую часть этого класса более подробно:   
   
 Сначала создается ссылка на объект типа сканер. Он нужен для того, чтобы считать ход игрока.   
@@ -308,148 +200,6 @@ public void setResultOfTry(ArrayList<char[][]> rt){
 
     
 2.	GameHelper    
-```java
-import java.util.*;
-
-public class GameHelper {
-	
-	public static Scanner scanTry = new Scanner(System.in);
-	
-	
-	
-    public void matrixIndex(int mi, int mj){
-		String[][] masivPlay = new String[mi][mj];
-		
-		System.out.println("Выбери один из индексов:");
-		
-    	for (int i = 0; i < mi; i++) {
-  	      for (int j = 0; j < mj; j++) {
-  	            	masivPlay[i][j] = "" + i + " " + j + "";
-  	      }
-    	}
-  	             
-    	for (int i = 0; i < mi; i++) {
-    		for (int j = 0; j < mj; j++) {
-  	           System.out.print(masivPlay[i][j] + "  ");
-    		}
-    		System.out.println();
-    		System.out.println();
-    	}
-    	System.out.println("");
-    }
-	
-
-	
-
-
-    public  boolean mineCheck(char[][] ff, int mas_i, int mas_j){
-  
-    	boolean explosionСhecking  = true;
-    	
-    	System.out.println("Введи свой выбор:");
-    	
-        int try_i = scanTry.nextInt();
-        int try_j = scanTry.nextInt();
-        
-        MinerGame mg = new MinerGame();
-
-        char[][] fTemp = new char[mas_i][mas_j];
-        
-        ArrayList <char[][]> tempArray = new ArrayList<char[][]>();
-        
-        
-        
-        if (ff[try_i][try_j] == '*') {
-        	System.out.println("Сапер взлетел на воздух!");
-        	
-        	
-        	for (int i = 0; i < ff.length; i++) {
-                for (int j = 0; j < ff[i].length; j++) {
-                	fTemp[i][j] = '.';
-                }
-            } 
-            
-        	System.out.println();
-        	
-        	for (int i = 0; i < ff.length; i++) {
-        		for (int j = 0; j < ff[i].length; j++) {
-        			if (ff[i][j] == '0' || ff[i][j] == '1' || ff[i][j] == '2' || ff[i][j] == '3' || ff[i][j] == '4'
-        					|| ff[i][j] == '5' || ff[i][j] == '6' || ff[i][j] == '7' || ff[i][j] == '8') {
-        				fTemp[i][j] = ff[i][j];
-        			}
-        		}     
-        	}
-        	fTemp[try_i][try_j] = '*'; 
-        	
-        	explosionСhecking = false;
-        }
-        else {
-            for (int i = 0; i < ff.length; i++) {
-                for (int j = 0; j < ff[i].length; j++) {
-                	fTemp[i][j] = '.';
-                }
-            } 
-            
-        	System.out.println();
-        	
-        	for (int i = 0; i < ff.length; i++) {
-        		for (int j = 0; j < ff[i].length; j++) {
-        			if ( i == try_i && j == try_j) {
-        				ff[i][j] = mg.checkAdjacentField(try_i, try_j, ff);
-        				fTemp[i][j] = ff[i][j];
-        			}
-        			if (ff[i][j] == '0' || ff[i][j] == '1' || ff[i][j] == '2' || ff[i][j] == '3' || ff[i][j] == '4'
-        					|| ff[i][j] == '5' || ff[i][j] == '6' || ff[i][j] == '7' || ff[i][j] == '8') {
-        				fTemp[i][j] = ff[i][j];
-        			}
-        		}     
-        	}
-            explosionСhecking = true;
-        }
- 
-        
-        for (int i = 0; i < ff.length; i++) {
-            for (int j = 0; j < ff[i].length; j++) {
-                System.out.print(fTemp[i][j] + "    "); 
-            }
-            System.out.println();
-            System.out.println();
-        }
-        
-        tempArray.add(ff);
-        mg.setResultOfTry(tempArray);
-        tempArray.remove(ff);
-        
-        return explosionСhecking;
-    }
-    
-    
-    
-    
-    public boolean CheckArrConainsDark(ArrayList <char[][]> l){
-    	boolean d = true;
-    	int countDark = 0;
-    	for (char[][] array : l) {
-            for (char[] row : array) {
-                for (char element : row) {
-                    if (element == '.' ) {
-                    	countDark++;   
-                    }
-                }
-            }
-        }
-    	if (countDark >= 1) {
-    		d = true;
-    	}
-    	else {
-    		d = false;
-    	}
-    	return d;
-    }
-    
-}
-```
-
 
 В первую очередь необходимо похаботиться о возможности считать шаг игрока, в этом нам поможет сканер:  
 ```java
@@ -643,5 +393,286 @@ public class MessageHelper {
 Во-первых, тут нет графического интерфейса, из-за чего сложнее ориентироваться на поле, а также нет возможности пометить флажком расположение мин.     
 Во-вторых, данная игра запускается только из компилятора.  
   
+  
 В будущем я бы хотел сделать код более "чистым", дополнить эту игру графическим интерфейсом в необычном оформлении, возможностью пройти игру на сайте, а также как фишку добавить возможность создавать не только четырехугольные поля ("необычная" форма поля будет даваться игроку на выбор, в отличие от обычного четырехугольного).
+
+Ниже можно посмотреть полный код игры:
+
+
+```java
+import java.util.*;
+
+public class MinerGame {
+	
+	public static Scanner sc = new Scanner(System.in);
+	
+	public static ArrayList <char[][]> resultOfTry = new ArrayList<char[][]>();
+	
+	public static void main(String[] args) {
+		MessageHelper mh = new MessageHelper();
+		mh.gameRules();
+		
+		System.out.println("Введи размер игрового поля, чтобы начать игру:");
+		int field_i = sc.nextInt();
+		int field_j = sc.nextInt();
+		            
+		char[][] field = new char[field_i][field_j];
+		             
+		fillTheField(field,field_i,field_j);
+		
+		System.out.println("");
+
+		boolean ifFieldContainsDark = true;
+		boolean ifHitMine = true;
+		
+		int tryCounter = 0;
+		
+		
+		do{
+		    GameHelper gh = new GameHelper();
+			gh.matrixIndex(field_i, field_j);
+			ifHitMine = gh.mineCheck(field, field_i,field_j);
+			
+/* подсказка разработчику
+		       for (char[][] array2D : resultOfTry) {
+		            System.out.println("Next 2D ЕКНarray:");
+		            for (char[] row : array2D) {
+		                for (char element : row) {
+		                    System.out.print(element + " ");
+		                }
+		                System.out.println(); 
+		            }
+		            System.out.println(); 
+		            
+		        }
+*/
+			
+			ifFieldContainsDark = gh.CheckArrConainsDark(resultOfTry);
+		    tryCounter++; 
+		 }while(ifHitMine == true && ifFieldContainsDark == true);
+		resultOfTry.clear();
+		mh.finishGame(tryCounter);
+	}
+
+	
+	public void setResultOfTry(ArrayList<char[][]> rt){
+        for (char[][] element : rt) {
+        	resultOfTry.add(element);
+        }
+	}
+	
+	
+	
+	public static void fillTheField (char[][] matrix,int mas_i,int mas_j){
+		Random rnd = new Random(System.currentTimeMillis());
+		for (int i=0;i<mas_i;i++){
+		    for (int j=0;j<mas_j;j++){
+		        if (rnd.nextInt(2)==0) matrix[i][j]='.';
+		        else matrix[i][j]='*';
+		        System.out.print(matrix[i][j] + "    ");
+		    }
+		    System.out.println();
+		    System.out.println();
+		}
+	}
+		 
+		    
+		    
+	public static char checkAdjacentField(int i, int j, char[][] pt) {
+		int count = 0;
+		if (j <= pt[i].length - 2) { // to the right
+			count += pt[i][j + 1] == '*' ? 1 : 0;
+		}
+		if (j <= pt[i].length - 2 && i <= pt.length - 2) { // move to top right
+			count += pt[i + 1][j + 1] == '*' ? 1 : 0;
+		}
+		if (j <= pt[i].length - 2 && i > 0) { // move to bottom right
+		    count += pt[i - 1][j + 1] == '*' ? 1 : 0;
+		}
+		if (j > 0) { // to the left
+		    count += pt[i][j - 1] == '*' ? 1 : 0;
+		}
+		if (j > 0 && i <= pt.length - 2) { // to top left
+		    count += pt[i + 1][j - 1] == '*' ? 1 : 0;
+		}
+		if (j > 0 && i > 0) { // to bottom left
+		    count += pt[i - 1][j - 1] == '*' ? 1 : 0;
+		}
+		if (i <= pt.length - 2) { // move to top
+		    count += pt[i + 1][j] == '*' ? 1 : 0;
+		}
+		if (i > 0) { // move top bottom
+		    count += pt[i - 1][j] == '*' ? 1 : 0;
+		}
+		String stringValue = String.valueOf(count);
+		return stringValue.charAt(0);
+	}
+}
+```
+
+
+```java
+import java.util.*;
+
+public class GameHelper {
+	
+	public static Scanner scanTry = new Scanner(System.in);
+	
+	
+	
+    public void matrixIndex(int mi, int mj){
+		String[][] masivPlay = new String[mi][mj];
+		
+		System.out.println("Выбери один из индексов:");
+		
+    	for (int i = 0; i < mi; i++) {
+  	      for (int j = 0; j < mj; j++) {
+  	            	masivPlay[i][j] = "" + i + " " + j + "";
+  	      }
+    	}
+  	             
+    	for (int i = 0; i < mi; i++) {
+    		for (int j = 0; j < mj; j++) {
+  	           System.out.print(masivPlay[i][j] + "  ");
+    		}
+    		System.out.println();
+    		System.out.println();
+    	}
+    	System.out.println("");
+    }
+	
+
+	
+
+
+    public  boolean mineCheck(char[][] ff, int mas_i, int mas_j){
+  
+    	boolean explosionСhecking  = true;
+    	
+    	System.out.println("Введи свой выбор:");
+    	
+        int try_i = scanTry.nextInt();
+        int try_j = scanTry.nextInt();
+        
+        MinerGame mg = new MinerGame();
+
+        char[][] fTemp = new char[mas_i][mas_j];
+        
+        ArrayList <char[][]> tempArray = new ArrayList<char[][]>();
+        
+        
+        
+        if (ff[try_i][try_j] == '*') {
+        	System.out.println("Сапер взлетел на воздух!");
+        	
+        	
+        	for (int i = 0; i < ff.length; i++) {
+                for (int j = 0; j < ff[i].length; j++) {
+                	fTemp[i][j] = '.';
+                }
+            } 
+            
+        	System.out.println();
+        	
+        	for (int i = 0; i < ff.length; i++) {
+        		for (int j = 0; j < ff[i].length; j++) {
+        			if (ff[i][j] == '0' || ff[i][j] == '1' || ff[i][j] == '2' || ff[i][j] == '3' || ff[i][j] == '4'
+        					|| ff[i][j] == '5' || ff[i][j] == '6' || ff[i][j] == '7' || ff[i][j] == '8') {
+        				fTemp[i][j] = ff[i][j];
+        			}
+        		}     
+        	}
+        	fTemp[try_i][try_j] = '*'; 
+        	
+        	explosionСhecking = false;
+        }
+        else {
+            for (int i = 0; i < ff.length; i++) {
+                for (int j = 0; j < ff[i].length; j++) {
+                	fTemp[i][j] = '.';
+                }
+            } 
+            
+        	System.out.println();
+        	
+        	for (int i = 0; i < ff.length; i++) {
+        		for (int j = 0; j < ff[i].length; j++) {
+        			if ( i == try_i && j == try_j) {
+        				ff[i][j] = mg.checkAdjacentField(try_i, try_j, ff);
+        				fTemp[i][j] = ff[i][j];
+        			}
+        			if (ff[i][j] == '0' || ff[i][j] == '1' || ff[i][j] == '2' || ff[i][j] == '3' || ff[i][j] == '4'
+        					|| ff[i][j] == '5' || ff[i][j] == '6' || ff[i][j] == '7' || ff[i][j] == '8') {
+        				fTemp[i][j] = ff[i][j];
+        			}
+        		}     
+        	}
+            explosionСhecking = true;
+        }
+ 
+        
+        for (int i = 0; i < ff.length; i++) {
+            for (int j = 0; j < ff[i].length; j++) {
+                System.out.print(fTemp[i][j] + "    "); 
+            }
+            System.out.println();
+            System.out.println();
+        }
+        
+        tempArray.add(ff);
+        mg.setResultOfTry(tempArray);
+        tempArray.remove(ff);
+        
+        return explosionСhecking;
+    }
+    
+    
+    
+    
+    public boolean CheckArrConainsDark(ArrayList <char[][]> l){
+    	boolean d = true;
+    	int countDark = 0;
+    	for (char[][] array : l) {
+            for (char[] row : array) {
+                for (char element : row) {
+                    if (element == '.' ) {
+                    	countDark++;   
+                    }
+                }
+            }
+        }
+    	if (countDark >= 1) {
+    		d = true;
+    	}
+    	else {
+    		d = false;
+    	}
+    	return d;
+    }
+    
+}
+```
+
+
+      
+```java
+public class MessageHelper {
+	public void gameRules() {
+		System.out.print("Добро пожаловать в игру сапер!");
+		System.out.println("Правила игры: игроку необходимо открыть все ячейки поля не задев мину");
+		System.out.println("Игровое поле не может привышать размер 10 на 10 ячеек");
+		System.out.println("Удачи");
+		System.out.println();
+	}
+	
+	public void finishGame(int tk) {
+		System.out.println("Игра окончена");
+		System.out.println("Ты смог сделать " + tk + " шаг(а/ов)" );
+	}
+}
+```  
+
+
+
+  
      

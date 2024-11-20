@@ -96,9 +96,9 @@ public static ArrayList <char[][]> resultOfTry = new ArrayList<char[][]>();
 Также здесь вы можете наблюдать закомментированную часть кода:
 ```java
 /* подсказка разработчику
-		       for (char[][] array2D : resultOfTry) {
-		            System.out.println("Next 2D ЕКНarray:");
-		            for (char[] row : array2D) {
+		       for (char[][] arr : resultOfTry) {
+		            System.out.println("result of try:");
+		            for (char[] row : arr) {
 		                for (char element : row) {
 		                    System.out.print(element + " ");
 		                }

@@ -164,42 +164,42 @@ public void setResultOfTry(ArrayList<char[][]> rt){
 ```java
 	public static char adjacentCellsMines(int i, int j, char[][] pt) {
 		int mineCounter = 0;
-		if (j <= pt[i].length - 2) { // to the right
+		if (j <= pt[i].length - 2) { 
 			if(pt[i][j + 1] == '*') {
 				mineCounter++;
 			}
 		}
-		if (j <= pt[i].length - 2 && i <= pt.length - 2) { // move to top right
+		if (j <= pt[i].length - 2 && i <= pt.length - 2) { 
 			if(pt[i + 1][j + 1] == '*') {
 				mineCounter++;
 			}	
 		}
-		if (j <= pt[i].length - 2 && i > 0) { // move to bottom right
+		if (j <= pt[i].length - 2 && i > 0) { 
 			if(pt[i - 1][j + 1] == '*') {
 				mineCounter++;
 			}
 		}
-		if (j > 0) { // to the left
+		if (j > 0) { 
 			if(pt[i][j - 1] == '*') {
 				mineCounter++;
 			}
 		}
-		if (j > 0 && i <= pt.length - 2) { // to top left
+		if (j > 0 && i <= pt.length - 2) { 
 			if(pt[i + 1][j - 1] == '*') {
 				mineCounter++;
 			}
 		}
-		if (j > 0 && i > 0) { // to bottom left
+		if (j > 0 && i > 0) { 
 			if(pt[i - 1][j - 1] == '*') {
 				mineCounter++;
 			}
 		}
-		if (i <= pt.length - 2) { // move to top
+		if (i <= pt.length - 2) { 
 			if(pt[i + 1][j] == '*') {
 				mineCounter++;
 			}
 		}
-		if (i > 0) { // move top bottom
+		if (i > 0) { 
 			if(pt[i - 1][j] == '*') {
 				mineCounter++;
 			}
@@ -495,44 +495,44 @@ public class MinerGame {
 		 
 		    
 		    
-	public static char adjacentCellsMines(int i, int j, char[][] pt) {
+public static char adjacentCellsMines(int i, int j, char[][] pt) {
 		int mineCounter = 0;
-		if (j <= pt[i].length - 2) { // to the right
+		if (j <= pt[i].length - 2) { 
 			if(pt[i][j + 1] == '*') {
 				mineCounter++;
 			}
 		}
-		if (j <= pt[i].length - 2 && i <= pt.length - 2) { // move to top right
+		if (j <= pt[i].length - 2 && i <= pt.length - 2) { 
 			if(pt[i + 1][j + 1] == '*') {
 				mineCounter++;
 			}	
 		}
-		if (j <= pt[i].length - 2 && i > 0) { // move to bottom right
+		if (j <= pt[i].length - 2 && i > 0) { 
 			if(pt[i - 1][j + 1] == '*') {
 				mineCounter++;
 			}
 		}
-		if (j > 0) { // to the left
+		if (j > 0) { 
 			if(pt[i][j - 1] == '*') {
 				mineCounter++;
 			}
 		}
-		if (j > 0 && i <= pt.length - 2) { // to top left
+		if (j > 0 && i <= pt.length - 2) { 
 			if(pt[i + 1][j - 1] == '*') {
 				mineCounter++;
 			}
 		}
-		if (j > 0 && i > 0) { // to bottom left
+		if (j > 0 && i > 0) { 
 			if(pt[i - 1][j - 1] == '*') {
 				mineCounter++;
 			}
 		}
-		if (i <= pt.length - 2) { // move to top
+		if (i <= pt.length - 2) { 
 			if(pt[i + 1][j] == '*') {
 				mineCounter++;
 			}
 		}
-		if (i > 0) { // move top bottom
+		if (i > 0) { 
 			if(pt[i - 1][j] == '*') {
 				mineCounter++;
 			}

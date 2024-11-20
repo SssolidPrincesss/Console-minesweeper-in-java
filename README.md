@@ -162,33 +162,49 @@ public void setResultOfTry(ArrayList<char[][]> rt){
 Это последний метод данного класса и он проверяет наличие в соседних от хода игрока клетках поля наличие мин и считает их количество, а после возвращает это значение в символьном типе:
 
 ```java
-	public static char checkAdjacentField(int i, int j, char[][] pt) {
-		int count = 0;
+	public static char adjacentCellsMines(int i, int j, char[][] pt) {
+		int mineCounter = 0;
 		if (j <= pt[i].length - 2) { // to the right
-			count += pt[i][j + 1] == '*' ? 1 : 0;
+			if(pt[i][j + 1] == '*') {
+				mineCounter++;
+			}
 		}
 		if (j <= pt[i].length - 2 && i <= pt.length - 2) { // move to top right
-			count += pt[i + 1][j + 1] == '*' ? 1 : 0;
+			if(pt[i + 1][j + 1] == '*') {
+				mineCounter++;
+			}	
 		}
 		if (j <= pt[i].length - 2 && i > 0) { // move to bottom right
-		    count += pt[i - 1][j + 1] == '*' ? 1 : 0;
+			if(pt[i - 1][j + 1] == '*') {
+				mineCounter++;
+			}
 		}
 		if (j > 0) { // to the left
-		    count += pt[i][j - 1] == '*' ? 1 : 0;
+			if(pt[i][j - 1] == '*') {
+				mineCounter++;
+			}
 		}
 		if (j > 0 && i <= pt.length - 2) { // to top left
-		    count += pt[i + 1][j - 1] == '*' ? 1 : 0;
+			if(pt[i + 1][j - 1] == '*') {
+				mineCounter++;
+			}
 		}
 		if (j > 0 && i > 0) { // to bottom left
-		    count += pt[i - 1][j - 1] == '*' ? 1 : 0;
+			if(pt[i - 1][j - 1] == '*') {
+				mineCounter++;
+			}
 		}
 		if (i <= pt.length - 2) { // move to top
-		    count += pt[i + 1][j] == '*' ? 1 : 0;
+			if(pt[i + 1][j] == '*') {
+				mineCounter++;
+			}
 		}
 		if (i > 0) { // move top bottom
-		    count += pt[i - 1][j] == '*' ? 1 : 0;
+			if(pt[i - 1][j] == '*') {
+				mineCounter++;
+			}
 		}
-		String stringValue = String.valueOf(count);
+		String stringValue = String.valueOf(mineCounter);
 		return stringValue.charAt(0);
 	}
 }
@@ -300,7 +316,7 @@ System.out.println("Введи свой выбор:");
         	for (int i = 0; i < ff.length; i++) {
         		for (int j = 0; j < ff[i].length; j++) {
         			if ( i == try_i && j == try_j) {
-        				ff[i][j] = mg.checkAdjacentField(try_i, try_j, ff);
+        				ff[i][j] = mg.adjacentCellsMines(try_i, try_j, ff);
         				fTemp[i][j] = ff[i][j];
         			}
         			if (ff[i][j] == '0' || ff[i][j] == '1' || ff[i][j] == '2' || ff[i][j] == '3' || ff[i][j] == '4' || ff[i][j] == '5' || ff[i][j] == '6' || ff[i][j] == '7' || ff[i][j] == '8') {
@@ -479,33 +495,49 @@ public class MinerGame {
 		 
 		    
 		    
-	public static char checkAdjacentField(int i, int j, char[][] pt) {
-		int count = 0;
+	public static char adjacentCellsMines(int i, int j, char[][] pt) {
+		int mineCounter = 0;
 		if (j <= pt[i].length - 2) { // to the right
-			count += pt[i][j + 1] == '*' ? 1 : 0;
+			if(pt[i][j + 1] == '*') {
+				mineCounter++;
+			}
 		}
 		if (j <= pt[i].length - 2 && i <= pt.length - 2) { // move to top right
-			count += pt[i + 1][j + 1] == '*' ? 1 : 0;
+			if(pt[i + 1][j + 1] == '*') {
+				mineCounter++;
+			}	
 		}
 		if (j <= pt[i].length - 2 && i > 0) { // move to bottom right
-		    count += pt[i - 1][j + 1] == '*' ? 1 : 0;
+			if(pt[i - 1][j + 1] == '*') {
+				mineCounter++;
+			}
 		}
 		if (j > 0) { // to the left
-		    count += pt[i][j - 1] == '*' ? 1 : 0;
+			if(pt[i][j - 1] == '*') {
+				mineCounter++;
+			}
 		}
 		if (j > 0 && i <= pt.length - 2) { // to top left
-		    count += pt[i + 1][j - 1] == '*' ? 1 : 0;
+			if(pt[i + 1][j - 1] == '*') {
+				mineCounter++;
+			}
 		}
 		if (j > 0 && i > 0) { // to bottom left
-		    count += pt[i - 1][j - 1] == '*' ? 1 : 0;
+			if(pt[i - 1][j - 1] == '*') {
+				mineCounter++;
+			}
 		}
 		if (i <= pt.length - 2) { // move to top
-		    count += pt[i + 1][j] == '*' ? 1 : 0;
+			if(pt[i + 1][j] == '*') {
+				mineCounter++;
+			}
 		}
 		if (i > 0) { // move top bottom
-		    count += pt[i - 1][j] == '*' ? 1 : 0;
+			if(pt[i - 1][j] == '*') {
+				mineCounter++;
+			}
 		}
-		String stringValue = String.valueOf(count);
+		String stringValue = String.valueOf(mineCounter);
 		return stringValue.charAt(0);
 	}
 }
@@ -599,7 +631,7 @@ public class GameHelper {
         	for (int i = 0; i < ff.length; i++) {
         		for (int j = 0; j < ff[i].length; j++) {
         			if ( i == try_i && j == try_j) {
-        				ff[i][j] = mg.checkAdjacentField(try_i, try_j, ff);
+        				ff[i][j] = mg.adjacentCellsMines(try_i, try_j, ff);
         				fTemp[i][j] = ff[i][j];
         			}
         			if (ff[i][j] == '0' || ff[i][j] == '1' || ff[i][j] == '2' || ff[i][j] == '3' || ff[i][j] == '4'
